@@ -12,23 +12,21 @@ int get_change(void) {
   int cents;
   do {
     cents = get_int("Change owned (in cents): ");
+    if (cents <= 0) {
+      printf("Please enter a positive integer.\n");
+    }
+
   } while (cents <= 0);
   return cents;
 }
 int calc_coins(int money) {
-  // Coin denominations in cents
-  const int quarter = 25;
-  const int dime = 10;
-  const int nickel = 5;
-  const int penny = 1;
-  int coins = 0;
-  // Calculate the number of coins for each denomination
-  coins += money / quarter;
-  money %= quarter;
-  coins += money / dime;
-  money %= dime;
-  coins += money / nickel;
-  money %= nickel;
-  coins += money / penny;
-  return coins;
+  const int coins[] = {25, 10, 5, 1};
+  int num_coins = 0;
+
+  for (int i = 0; i < 4; i++) {
+    num_coins += money / coins[i];
+    money %= coins[i];
+  }
+
+  return num_coins;
 }
